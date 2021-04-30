@@ -13,4 +13,4 @@ type playerContext = {
     currentEpisodeIndex: number;
 }
 
-export const playerContext = createContext(''); // String Vazia apenas para iniciar o tipo do contexto no caso: String
+export const playerContext = createContext({} as playerContext); // String Vazia apenas para iniciar o tipo do contexto no caso: String
