@@ -13,11 +13,12 @@ function MyApp({ Component, pageProps }) {
 
 
   function play(episode){
-    setEpisodeList([episode])
+    setEpisodeList([episode]);
+    setCurrentEpisodeIndex(0);
   }
 
   return (
-    <playerContext.Provider value={{ currentEpisodeIndex, episodeList}}> 
+    <playerContext.Provider value={{ currentEpisodeIndex, episodeList, play}}> 
       <div className={styles.wrapper}>
         <main>
           <Header />
