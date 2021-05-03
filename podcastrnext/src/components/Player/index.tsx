@@ -1,5 +1,7 @@
 import { useContext } from "react";
 
+import Image from 'next/image';
+
 import { playerContext } from "../../contexts/PlayerContext";
 import Episode from "../../pages/episodes/[slug]";
 
@@ -7,7 +9,7 @@ import styles from "./styles.module.scss";
 
 export function Player() {
     const { episodeList, currentEpisodeIndex } = useContext(playerContext);
-    
+
     const episode = episodeList[currentEpisodeIndex];
 
     return (
@@ -19,8 +21,16 @@ export function Player() {
 
             { episode ? (
                 <div className={styles.currentEpisode}>
-
+                    <Image
+                        width={592}
+                        height={592}
+                        src={episode.thumbnail}
+                        objectFit='cover'
+                    />
+                    <strong>{episode.title}</strong>
+                    <span>{episode.members}</span>
                 </div>
+
             ) : (
                 <div className={styles.emptyPlayer}>
                     <strong>Selecione um podcast para ouvir</strong>
