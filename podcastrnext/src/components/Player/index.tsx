@@ -1,11 +1,14 @@
 import { useContext } from "react";
 
 import { playerContext } from "../../contexts/PlayerContext";
+import Episode from "../../pages/episodes/[slug]";
 
 import styles from "./styles.module.scss";
 
 export function Player() {
+    const { episodeList, currentEpisodeIndex } = useContext(playerContext);
     
+    const episode = episodeList[currentEpisodeIndex];
 
     return (
         <div className={styles.playerContainer}>
@@ -14,9 +17,15 @@ export function Player() {
                 <strong>Tocando agora</strong>
             </header>
 
-            <div className={styles.emptyPlayer}>
-                <strong>Selecione um podcast para ouvir</strong>
-            </div>
+            { episode ? (
+                <div className={styles.currentEpisode}>
+
+                </div>
+            ) : (
+                <div className={styles.emptyPlayer}>
+                    <strong>Selecione um podcast para ouvir</strong>
+                </div>
+            )}
 
             <footer className={styles.empty}>
                 <div className={styles.progress}>
