@@ -1,5 +1,6 @@
-import { createContext, useState } from 'react';
+import { createContext, useState, ReactNode } from 'react';
 
+// Tipagem Episódio
 type Episode = {
     title: string;
     members: string;
@@ -8,11 +9,13 @@ type Episode = {
     url: string;
 }
 
+// Tipagem Contexto
 type playerContext = {
     episodeList: Episode[];
     currentEpisodeIndex: number;
     isPlaying: boolean;
     play: (episode: Episode) => void;
+    playList: (list: Episode[], index: number) => void;
     setPlayingState: (state: boolean) => void;
     togglePlay: () => void;
 }
@@ -20,14 +23,24 @@ type playerContext = {
 export const playerContext = createContext({} as playerContext); // String Vazia apenas para iniciar o tipo do contexto no caso: String
 
 
-export function PlayerContextProvider() {
+type PlayerContextProviderProps = {
+    children: ReactNode;
+}
+
+export function PlayerContextProvider({ children }: PlayerContextProviderProps) {
     const [episodeList, setEpisodeList] = useState([]);
     const [currentEpisodeIndex, setCurrentEpisodeIndex] = useState(0);
     const [isPlaying, setIsPlaying] = useState(false);
 
-    function play(episode) {
+    function play(episode: Episode) {
         setEpisodeList([episode]);
         setCurrentEpisodeIndex(0);
+        setIsPlaying(true);
+    }
+
+    function playList(list: Episode[], index: number){
+        setEpisodeList(list);
+        setCurrentEpisodeIndex(index);
         setIsPlaying(true);
     }
 
@@ -40,8 +53,16 @@ export function PlayerContextProvider() {
     }
 
     return (
-        <playerContext.Provider value={{ currentEpisodeIndex, episodeList, play, isPlaying, togglePlay, setPlayingState }}>
-
+        <playerContext.Provider 
+        value={{ 
+            currentEpisodeIndex, 
+            episodeList, 
+            play, 
+            playList,
+            isPlaying, 
+            togglePlay, 
+            setPlayingState }}>
+            {children}
         </playerContext.Provider>
     )
 }
